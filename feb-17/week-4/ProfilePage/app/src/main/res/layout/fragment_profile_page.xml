@@ -7,29 +7,26 @@
     android:background="#35586c"
     android:gravity="start">
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
         <LinearLayout
+            android:id="@+id/add_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="start"
+            android:orientation="vertical"
             android:gravity="center"
-            android:padding="5dp">
+            android:background="@drawable/circle_drawable"
+            android:clickable="true">
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/register_icon"
-                android:clickable="false"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/user_profile_img"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Account"
-                android:layout_marginLeft="10dp"
-                android:textSize="30sp"
-                android:textColor="#fff"/>
-
+                android:text="Add Image"/>
         </LinearLayout>
 
     </FrameLayout>
@@ -43,15 +40,16 @@
             android:text="* "
             style="@style/redStar"/>
         <TextView
-            android:id="@+id/nameError"
+            android:id="@+id/name_error"
             android:text=""
             style="@style/redStar"/>
     </LinearLayout>
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/user_name"
         android:hint="Full name"
-        android:background="@drawable/rectangle_border_edittext"
-        style="@style/username_et">
+        android:inputType="text"
+        android:maxLength="150"
+        style="@style/edit_text">
         <requestFocus/>
     </EditText>
 
@@ -64,14 +62,16 @@
             android:text="* "
             style="@style/redStar"/>
         <TextView
-            android:id="@+id/emailError"
+            android:id="@+id/email_error"
             android:text=""
             style="@style/redStar"/>
     </LinearLayout>
     <EditText
-        android:id="@+id/useremail"
+        android:id="@+id/user_email"
         android:hint="Email"
-        style="@style/email_et">
+        android:inputType="textEmailAddress"
+        android:maxLength="150"
+        style="@style/edit_text">
     </EditText>
 
     <LinearLayout
@@ -80,26 +80,80 @@
         android:layout_marginBottom="-6dp"
         android:orientation="horizontal">
         <TextView
-            android:text="* "
+            android:text=""
             style="@style/redStar"/>
         <TextView
-            android:id="@+id/passwordError"
+            android:id="@+id/password_error"
             android:text=""
             style="@style/redStar"/>
     </LinearLayout>
     <EditText
-        android:id="@+id/userpassword"
-        android:hint="Password"
-        style="@style/email_et">
+        android:id="@+id/user_password"
+        android:hint="Mob no (optional)"
+        android:inputType="phone"
+        android:maxLength="10"
+        style="@style/edit_text">
     </EditText>
-    <CheckBox
-        android:id="@+id/showPassword"
-        android:text="Show password"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:textSize="14sp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="-6dp"
+        android:orientation="horizontal">
+        <TextView
+            android:text=""
+            style="@style/redStar"/>
+        <TextView
+            android:id="@+id/password_error"
+            android:text=""
+            style="@style/redStar"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/user_dob"
+        android:hint="DOB (optional)"
+        android:inputType="date"
+        android:maxLength="10"
+        style="@style/edit_text">
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/medium_text" />
+        <RadioGroup
+            android:id="@+id/gender_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+            <requestFocus/>
+            <RadioButton
+                android:id="@+id/gender_female"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                style="@style/radio_button"/>
+            <RadioButton
+                android:id="@+id/gender_male"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                style="@style/radio_button"/>
+        </RadioGroup>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,33 +161,11 @@
         android:layout_gravity="end"
         android:layout_marginTop="15dp">
         <Button
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:id="@+id/register"
-            android:textColor="#08b49b"
-            style="@style/frontButton"
-            android:gravity="center">
+            android:text="Submit"
+            style="@style/button">
         </Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="end"
-        android:layout_marginTop="15dp"
-        android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:clickable="true"
-            android:id="@+id/textSignup"
-            android:layout_height="40dp"
-            android:text="Have account? Login now."
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:gravity="center"/>
     </LinearLayout>
 </LinearLayout>

@@ -9,5 +9,8 @@ public class MainActivity extends com.example.rails.profilepage.base.BaseActivit
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            add(new ProfilePageFragment());
+        }
     }
 }
