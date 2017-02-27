@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/medium_margin"
     android:orientation="vertical"
-    android:background="#35586c"
+    android:background="@color/backgroundColor"
     android:gravity="start">
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_gravity="center">
         <LinearLayout
             android:id="@+id/add_image"
@@ -19,23 +20,22 @@
             android:background="@drawable/circle_drawable"
             android:clickable="true">
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/img_size"
+                android:layout_height="@dimen/img_size"
                 android:src="@drawable/user_profile_img"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Image"/>
+                android:text="@string/add_img"/>
         </LinearLayout>
 
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="-6dp">
+        android:id="@+id/name_error_layout"
+        android:visibility="gone"
+        style="@style/errorLayout">
         <TextView
             android:text="* "
             style="@style/redStar"/>
@@ -46,7 +46,7 @@
     </LinearLayout>
     <EditText
         android:id="@+id/user_name"
-        android:hint="Full name"
+        android:hint="@string/name_text"
         android:inputType="text"
         android:maxLength="150"
         style="@style/edit_text">
@@ -54,10 +54,9 @@
     </EditText>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-6dp"
-        android:orientation="horizontal">
+        android:id="@+id/email_error_layout"
+        android:visibility="gone"
+        style="@style/errorLayout">
         <TextView
             android:text="* "
             style="@style/redStar"/>
@@ -68,27 +67,26 @@
     </LinearLayout>
     <EditText
         android:id="@+id/user_email"
-        android:hint="Email"
+        android:hint="@string/email_text"
         android:inputType="textEmailAddress"
         android:maxLength="150"
         style="@style/edit_text">
     </EditText>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-6dp"
-        android:orientation="horizontal">
+        android:id="@+id/mob_error_layout"
+        android:visibility="gone"
+        style="@style/errorLayout">
         <TextView
-            android:text=""
+            android:text="* "
             style="@style/redStar"/>
         <TextView
-            android:id="@+id/password_error"
+            android:id="@+id/mob_error"
             android:text=""
             style="@style/redStar"/>
     </LinearLayout>
     <EditText
-        android:id="@+id/user_password"
+        android:id="@+id/user_mob"
         android:hint="Mob no (optional)"
         android:inputType="phone"
         android:maxLength="10"
@@ -96,15 +94,14 @@
     </EditText>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-6dp"
-        android:orientation="horizontal">
+        android:id="@+id/dob_error_layout"
+        android:visibility="gone"
+        style="@style/errorLayout">
         <TextView
-            android:text=""
+            android:text="* "
             style="@style/redStar"/>
         <TextView
-            android:id="@+id/password_error"
+            android:id="@+id/dob_error"
             android:text=""
             style="@style/redStar"/>
     </LinearLayout>
@@ -116,6 +113,18 @@
         style="@style/edit_text">
     </EditText>
 
+    <LinearLayout
+        android:id="@+id/gender_error_layout"
+        android:visibility="gone"
+        style="@style/errorLayout">
+        <TextView
+            android:text="* "
+            style="@style/redStar"/>
+        <TextView
+            android:id="@+id/gender_error"
+            android:text=""
+            style="@style/redStar"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
