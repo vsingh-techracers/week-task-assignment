@@ -21,8 +21,8 @@
             android:clickable="true">
             <ImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="@dimen/img_size"
-                android:layout_height="@dimen/img_size"
+                android:layout_width="@dimen/large_img_size"
+                android:layout_height="@dimen/large_img_size"
                 android:src="@drawable/user_profile_img"
                 />
             <TextView

@@ -8,6 +8,8 @@
     <dimen name="medium_margin">10dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="large_margin">12dp</dimen>
-    <dimen name="img_size">60dp</dimen>
+    <dimen name="small_img_size">30dp</dimen>
+    <dimen name="medium_img_size">60dp</dimen>
+    <dimen name="large_img_size">80dp</dimen>
     <dimen name="neg_medium_margin">-10dp</dimen>
 </resources>
