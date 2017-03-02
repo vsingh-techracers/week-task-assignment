@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -50,19 +52,28 @@ public class ProfilePageFragment extends BaseFragment {
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static Bitmap bitmapImg = null;
 
+    @Bind(R.id.root_container) LinearLayout mRootContainer;
     @Bind(R.id.gender_error) TextView mGenderError;
     @Bind(R.id.gender_error_layout) LinearLayout mGenderErrorLayout;
 
-    @Bind(R.id.add_image_text) TextView mAddImagetext;
     @Bind(R.id.add_image) LinearLayout mAddImage;
+    @Bind(R.id.dummy_pic_container) LinearLayout mDummyPicContainer;
     @Bind(R.id.profile_pic) ImageView mProfilePic;
     @Bind(R.id.user_name) EditText mUserName;
     @Bind(R.id.user_email) EditText mUserEmail;
     @Bind(R.id.user_dob) EditText mUserDob;
     @Bind(R.id.user_mob) EditText mUserMob;
+    @Bind(R.id.gender_container) LinearLayout mGenderContainer;
     @Bind(R.id.gender_status) RadioGroup mGenderStatus;
     @Bind(R.id.submit) Button mSubmit;
 
+
+    @Bind(R.id.user_name_text) TextView mUserNameText;
+    @Bind(R.id.user_email_text) TextView mUserEmailText;
+    @Bind(R.id.user_dob_text) TextView mUserDobText;
+    @Bind(R.id.user_mob_text) TextView mUserMobText;
+    @Bind(R.id.user_gender_text) TextView mUserGenderText;
+    @Bind(R.id.edit_again) Button mEditAgain;
 
     public ProfilePageFragment() {
         // Required empty public constructor
@@ -79,6 +90,14 @@ public class ProfilePageFragment extends BaseFragment {
         mGenderStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) { hideIt(mGenderErrorLayout); }
+        });
+        mEditAgain.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progress.setMessage("Restoring profile...");
+                progress.show();
+                resetAll();
+            }
         });
         return mProfilePageView;
     }
@@ -116,21 +135,111 @@ public class ProfilePageFragment extends BaseFragment {
     private OnClickListener mSubmitButtonListener    =   new OnClickListener() {
         @Override
         public void onClick(View v) {
+            progress.setMessage("Updating profile...");
+            progress.show();
             resetData();
-            setDataInStringFormat();
-            boolean isAllFieldsValid = dataValidation();
-            if (isAllFieldsValid){
-                User user = new User();
-                user.setName(name);
-                user.setEmail(email);
-                user.setMobile(mob);
-                user.setDob(dob);
-                user.setGender(gender);
-                user.setProfilePic(bitmapImg);
-                Toast.makeText(mActivity, "Data saved successfully!!!", Toast.LENGTH_SHORT).show();
-            }
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    setDataInStringFormat();
+                    boolean isAllFieldsValid = dataValidation();
+                    if (isAllFieldsValid){
+                        try{
+                            User user = new User();
+                            user.setName(name);
+                            user.setEmail(email);
+                            user.setMobile(mob);
+                            user.setDob(dob);
+                            user.setGender(gender);
+                            user.setProfilePic(bitmapImg);
+                            setDataAsProfileView(user);
+                            Toast.makeText(mActivity, "Successfully updated!!!", Toast.LENGTH_SHORT).show();
+                        }catch (Exception e){
+                            Toast.makeText(mActivity, "Updation failed!!!", Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+                        }
+
+                    } else {
+                        Toast.makeText(mActivity, "Something went wrong!!!", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+                    }
+                }
+            }, 2000);
+
         }
     };
+
+    private void resetData() {
+        name = email = dob = mob = gender = null;
+    }
+
+    private void setDataInStringFormat() {
+        name = getStringDataFromEditText(mUserName);
+        email = getStringDataFromEditText(mUserEmail);
+        dob = getStringDataFromEditText(mUserDob);
+        mob = getStringDataFromEditText(mUserMob);
+        if(mGenderStatus.getCheckedRadioButtonId()>=0){
+            gender = getStringDataFromRadioButton((RadioButton) mProfilePageView.findViewById(mGenderStatus.getCheckedRadioButtonId()));
+        }
+    }
+
+    private void setDataAsProfileView(User user) {
+        mUserNameText.setText(!user.getName().equals("") ?   "Name  :"+user.getName():"Name");
+        mUserEmailText.setText(!user.getEmail().equals("") ? "Email :"+user.getEmail():"Email");
+        mUserMobText.setText(!user.getMobile().equals("") ?  "Phone :"+user.getMobile():"Phone");
+        mUserDobText.setText(!user.getDob().equals("") ?     "DOB   :"+user.getDob():"DOB");
+        mUserGenderText.setText(!user.getGender().equals("")?"Gender:"+user.getGender():"Gender");
+        removeEditProfileView();
+        mRootContainer.setBackgroundColor(Color.parseColor("#185349"));
+        updateProfileView();
+        progress.dismiss();
+    }
+
+    private void updateProfileView() {
+        mUserNameText.setVisibility(View.VISIBLE);
+        mUserEmailText.setVisibility(View.VISIBLE);
+        mUserMobText.setVisibility(View.VISIBLE);
+        mUserDobText.setVisibility(View.VISIBLE);
+        mUserGenderText.setVisibility(View.VISIBLE);
+        mEditAgain.setVisibility(View.VISIBLE);
+    }
+
+    private void removeEditProfileView() {
+        mUserName.setVisibility(View.GONE);
+        mUserEmail.setVisibility(View.GONE);
+        mUserMob.setVisibility(View.GONE);
+        mUserDob.setVisibility(View.GONE);
+        mGenderContainer.setVisibility(View.GONE);
+        mSubmit.setVisibility(View.GONE);
+    }
+
+    private void resetAll() {
+        resetData();
+        mRootContainer.setBackgroundColor(Color.parseColor("#35586c"));
+        removeProfileView();
+        updateEditProfileView();
+        progress.dismiss();
+    }
+
+    private void updateEditProfileView() {
+        mDummyPicContainer.setVisibility(View.VISIBLE);
+        mUserName.setVisibility(View.VISIBLE);
+        mUserEmail.setVisibility(View.VISIBLE);
+        mUserMob.setVisibility(View.VISIBLE);
+        mUserDob.setVisibility(View.VISIBLE);
+        mGenderContainer.setVisibility(View.VISIBLE);
+        mSubmit.setVisibility(View.VISIBLE);
+    }
+
+    private void removeProfileView() {
+        mProfilePic.setVisibility(View.GONE);
+        mUserNameText.setVisibility(View.GONE);
+        mUserEmailText.setVisibility(View.GONE);
+        mUserMobText.setVisibility(View.GONE);
+        mUserDobText.setVisibility(View.GONE);
+        mUserGenderText.setVisibility(View.GONE);
+        mEditAgain.setVisibility(View.GONE);
+    }
 
     private OnClickListener mAddImageListener = new OnClickListener() {
         @Override
@@ -169,8 +278,9 @@ public class ProfilePageFragment extends BaseFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mAddImagetext.setVisibility(View.GONE);
+        mDummyPicContainer.setVisibility(View.GONE);
         mProfilePic.setImageBitmap(bitmapImg);
+        mProfilePic.setVisibility(View.VISIBLE);
     }
 
     private void onSelectFromGalleryResult(Intent data) {
@@ -183,8 +293,9 @@ public class ProfilePageFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
-        mAddImagetext.setVisibility(View.GONE);
+        mDummyPicContainer.setVisibility(View.GONE);
         mProfilePic.setImageBitmap(bitmapImg);
+        mProfilePic.setVisibility(View.VISIBLE);
     }
 
     private void selectImage() {
@@ -227,20 +338,6 @@ public class ProfilePageFragment extends BaseFragment {
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    private void resetData() {
-        name = email = dob = mob = gender = null;
-    }
-
-    private void setDataInStringFormat() {
-        name = getStringDataFromEditText(mUserName);
-        email = getStringDataFromEditText(mUserEmail);
-        dob = getStringDataFromEditText(mUserDob);
-        mob = getStringDataFromEditText(mUserMob);
-        if(mGenderStatus.getCheckedRadioButtonId()>=0){
-            gender = getStringDataFromRadioButton((RadioButton) mProfilePageView.findViewById(mGenderStatus.getCheckedRadioButtonId()));
-        }
     }
 
     @Override
