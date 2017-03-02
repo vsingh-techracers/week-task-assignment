@@ -42,7 +42,7 @@ public class User {
     public String getDob() {
         return dob;
     }
-    public void setDob(String bloodGroup) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
