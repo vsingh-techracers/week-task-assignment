@@ -1,11 +1,14 @@
 package com.example.rails.profilepage.modal;
 
+import android.graphics.Bitmap;
+
 public class User {
     private String name;
     private String email;
     private String mobile;
     private String dob;
     private String gender;
+    private Bitmap profilePic;
 
     public User() {
       /*Blank default constructor essential for Firebase*/
@@ -49,5 +52,13 @@ public class User {
     }
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    //Getters and setters for profile pic
+    public Bitmap getProfilePic() {
+        return profilePic;
+    }
+    public void setProfilePic(Bitmap profilePic) {
+        this.profilePic = profilePic;
     }
 }
