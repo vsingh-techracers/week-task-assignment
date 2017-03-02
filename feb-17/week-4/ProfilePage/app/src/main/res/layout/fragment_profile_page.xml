@@ -20,11 +20,14 @@
             android:background="@drawable/circle_drawable"
             android:clickable="true">
             <ImageView
+                android:id="@+id/profile_pic"
                 android:layout_width="@dimen/img_size"
                 android:layout_height="@dimen/img_size"
                 android:src="@drawable/user_profile_img"
                 />
             <TextView
+                android:id="@+id/add_image_text"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_img"/>
@@ -32,18 +35,6 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/name_error_layout"
-        android:visibility="gone"
-        style="@style/errorLayout">
-        <TextView
-            android:text="* "
-            style="@style/redStar"/>
-        <TextView
-            android:id="@+id/name_error"
-            android:text=""
-            style="@style/redStar"/>
-    </LinearLayout>
     <EditText
         android:id="@+id/user_name"
         android:hint="@string/name_text"
@@ -53,18 +44,6 @@
         <requestFocus/>
     </EditText>
 
-    <LinearLayout
-        android:id="@+id/email_error_layout"
-        android:visibility="gone"
-        style="@style/errorLayout">
-        <TextView
-            android:text="* "
-            style="@style/redStar"/>
-        <TextView
-            android:id="@+id/email_error"
-            android:text=""
-            style="@style/redStar"/>
-    </LinearLayout>
     <EditText
         android:id="@+id/user_email"
         android:hint="@string/email_text"
@@ -73,41 +52,17 @@
         style="@style/edit_text">
     </EditText>
 
-    <LinearLayout
-        android:id="@+id/mob_error_layout"
-        android:visibility="gone"
-        style="@style/errorLayout">
-        <TextView
-            android:text="* "
-            style="@style/redStar"/>
-        <TextView
-            android:id="@+id/mob_error"
-            android:text=""
-            style="@style/redStar"/>
-    </LinearLayout>
     <EditText
         android:id="@+id/user_mob"
-        android:hint="Mob no (optional)"
+        android:hint="Mob no (10 digits only)"
         android:inputType="phone"
         android:maxLength="10"
         style="@style/edit_text">
     </EditText>
 
-    <LinearLayout
-        android:id="@+id/dob_error_layout"
-        android:visibility="gone"
-        style="@style/errorLayout">
-        <TextView
-            android:text="* "
-            style="@style/redStar"/>
-        <TextView
-            android:id="@+id/dob_error"
-            android:text=""
-            style="@style/redStar"/>
-    </LinearLayout>
     <EditText
         android:id="@+id/user_dob"
-        android:hint="DOB (optional)"
+        android:hint="DOB (mm/dd/yyyy)"
         android:inputType="date"
         android:maxLength="10"
         style="@style/edit_text">
@@ -116,6 +71,7 @@
     <LinearLayout
         android:id="@+id/gender_error_layout"
         android:visibility="gone"
+        android:layout_marginBottom="@dimen/neg_medium_margin"
         style="@style/errorLayout">
         <TextView
             android:text="* "
@@ -130,7 +86,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingTop="5dp"
         android:layout_margin="5dp"
         android:paddingLeft="5dp">
         <TextView

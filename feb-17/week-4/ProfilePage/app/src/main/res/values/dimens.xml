@@ -9,4 +9,5 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="large_margin">12dp</dimen>
     <dimen name="img_size">60dp</dimen>
+    <dimen name="neg_medium_margin">-10dp</dimen>
 </resources>
