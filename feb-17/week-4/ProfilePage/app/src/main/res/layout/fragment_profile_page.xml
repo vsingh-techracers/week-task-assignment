@@ -24,7 +24,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:elevation="12dp"
-                app:cardCornerRadius="40dp"
+                app:cardCornerRadius="45dp"
                 android:background="@color/black"
                 android:innerRadius="0dp"
                 android:shape="ring"

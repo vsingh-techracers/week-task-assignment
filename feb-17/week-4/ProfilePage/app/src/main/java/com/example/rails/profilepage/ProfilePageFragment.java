@@ -96,7 +96,20 @@ public class ProfilePageFragment extends BaseFragment {
             public void onClick(View view) {
                 progress.setMessage("Restoring profile...");
                 progress.show();
-                resetAll();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        try{
+                            resetAll();
+                            Toast.makeText(mActivity, "Successfully restored!!!", Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+                        }catch (Exception e){
+                            Toast.makeText(mActivity, "Operation failed!!!", Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+                        }
+                    }
+                }, 2000);
+
             }
         });
         return mProfilePageView;
