@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import {
   Navigator,
-  Text
+  Text,
+  TouchableOpacity,
+  Image
 } from 'react-native'
 
 import Routes                   from './Routes'
@@ -9,12 +11,13 @@ import BackButton               from './BackButton'
 import EditProfile                from '../EditProfile'
 import ProfileView                from '../ProfileView'
 import {barStyles}              from '../../styles/BarStyles'
+import { ProfileStyles } from "../../styles/ProfileStyles";
 
 export default class NavigationManager extends Component{
   render() {
     return (
       <Navigator
-          initialRoute={Routes.editProfile}
+          initialRoute={Routes.profileView}
            renderScene={(route, navigator) => this.renderScene(route, navigator)}
          navigationBar={this.configureNavigationBar()}
         configureScene={(route) => this.configureScene(route)} />
@@ -63,9 +66,7 @@ var NavigationBarRouteMapper = {
     )
   },
   RightButton(route, navigator, index, navState) {
-    return (
-      <Text></Text>
-    )
+    return null
   },
   Title(route, navigator, index) {
     switch(route.id) {
