@@ -3,6 +3,17 @@ import {
 } from 'react-native';
 
 const variables = {
+  navBarHeight: 64,
+  smallDistance: 5,
+  mediumDistance: 10,
+  largeDistance: 15,
+  veryLargeDistance: 20,
+  smallText: 10,
+  mediumDistance: 12,
+  largeDistance: 14,
+  veryLargeDistance: 16,
+
+
   avatarSize: 24,
   marginSize: 6,
   gutterSize: 8,
