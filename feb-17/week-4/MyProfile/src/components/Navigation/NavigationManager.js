@@ -44,11 +44,13 @@ export default class NavigationManager extends Component{
       case 'profileView':
         return (
           <ProfileView
+            {...route.props}
             navigator={navigator}/>
         )
       default:
         return (
           <EditProfile
+            {...route.props}
             navigator={navigator} />
         )
     }
