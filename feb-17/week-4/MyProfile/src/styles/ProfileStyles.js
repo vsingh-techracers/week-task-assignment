@@ -57,6 +57,8 @@ var ProfileStyles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    width: width,
+    height: height,
     alignSelf: "stretch"
   },
   textContainer: {

@@ -81,7 +81,7 @@ export default class ProfileView extends Component {
           </View>
           <View style = {ProfileStyles.usernameContainer} >
             <Text style = {ProfileStyles.username} >
-              Vinay Singh
+              {this.props&&this.props.name? this.props.name: "No name set"}
             </Text>
           </View>
           <View style = {ProfileStyles.blackSeparater}/>
