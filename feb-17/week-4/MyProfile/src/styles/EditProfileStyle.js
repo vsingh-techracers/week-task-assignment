@@ -6,6 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import variables from "./StyleVariables";
+import { styles as inline } from "./Constants";
 const {height, width} = Dimensions.get("window");
 
 var EditProfileStyle = StyleSheet.create({
@@ -28,17 +29,23 @@ var EditProfileStyle = StyleSheet.create({
     width: 25
   },
 	inputContainer: {
-		backgroundColor: "lightgrey",
-		margin: 10,
-		borderWidth: 1,
-		borderColor: "black"
+		alignSelf: "stretch"
 	},
 	TextInput: {
 		alignSelf: "stretch",
 		height: 40,
+		margin: 10,
 		padding: 5,
 		fontSize: 16,
+		borderWidth: 1,
+		borderColor: "black",
 		color: "black"	
+	},
+	errorText: {
+		...inline.errorText,
+		marginTop: 4,
+		marginLeft: 10,
+		marginBottom: -8,
 	},
 	spinnerView: {
 		height: 160,

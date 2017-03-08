@@ -23,19 +23,161 @@ import {
 import ImagePicker from "react-native-image-picker";
 import { ProfileStyles } from "../styles/ProfileStyles";
 import { EditProfileStyle } from "../styles/EditProfileStyle";
+import { nameRegex, dobRegex, mobileRegex, emailRegex } from "../modals/Regex.js"
 import variables from "../styles/StyleVariables";
+import ProfileView from './ProfileView'
 
 
 const { width, height } = Dimensions.get('window');
+let imageData;
+const userData = [];
+let isAllFieldsValid;
 
 export default class EditProfile extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      isAllFieldsValid: false,
-      avatarSource: ""
+      imgUri: "",
+      username: "",
+      gender: "",
+      dob: "",
+      email: "",
+      mob: "",
+      usernameErr: "",
+      genderErr: "",
+      dobErr: "",
+      emailErr: "",
+      mobErr: ""
     }
+  }
+
+  blankView() {
+    return (
+      <View style={{ flex: 0 }}/>
+      );
+  }
+
+  setUsername(text){
+    if (text.length<4) {
+      if (text.length<1) {
+        this.setState({ usernameErr: "Required" });
+      } else {
+        this.setState({ usernameErr: "Username must be in more than 4 chars" });
+      }
+    } else {
+      this.setState({
+        usernameErr: "",
+        username: text
+      });
+    }
+  }
+  
+  setDob(text){
+    if (text.length<10) {
+      if (text.length<1) {
+        this.setState({ dobErr: "Required" });
+      }
+    } else {
+      this.setState({
+        dobErr: "",
+        dob: text
+      });
+    }
+  }
+  
+  setMobile(text){
+    if (text.length<10) {
+      if (text.length<1) {
+        this.setState({ mobErr: "Required" });
+      }
+    } else {
+      this.setState({
+        mobErr: "",
+        mob: text
+      });
+    }
+  }
+
+  setEmail(text){
+      if (text.length<1) {
+        this.setState({ emailErr: "Required" });
+      }
+      else {
+      this.setState({
+        emailErr: "",
+        email: text
+      });
+    }
+  }
+
+  isNameValid() {
+    console.log("@@@@@@@@@@@@", this.state.username.match(nameRegex))
+    if (this.state.username.match(nameRegex)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  isDOBValid(txt) {
+    return txt.toLowerCase(dobRegex).trim().test(dobRegex);
+  }
+
+  isMobValid(txt) {
+    return txt.toLowerCase(mobileRegex).trim().test(mobileRegex);
+  }
+
+  isEmailValid(txt) {
+    return txt.toLowerCase(emailRegex).trim().test(emailRegex);
+  }
+
+  applyValidation() {
+    // let valid = true;
+    // if (!this.isNameValid()) {
+    //    console.log("===isNameValid=====");
+    //   valid = false;
+    // }
+    // if (!this.isDOBValid(this.state.dob)) {
+    //   console.log("===isDOBValid=====");
+    //   valid = false;
+    // }
+    // if (!this.isMobValid(this.state.mob)) {
+    //   console.log("===isMobValid=====");
+    //   valid = false;
+    // }
+    // if (!this.isEmailValid(this.state.email)) {
+    //   console.log("===isEmailValid=====");
+    //   valid = false;
+    // }
+    return valid;
+  }
+
+  submit() {
+    userData = []
+    userData.push(this.state.username);
+    userData.push(this.state.mob);
+    userData.push(this.state.email);
+    userData.push(this.state.dob);
+    console.log("@@@@@@@@",userData);
+    this.props.navigator.pop();
+    // this.props.navigator.push({
+    //     index: 0,
+    //     id: "ProfileView",
+    //     props: {
+    //       name: this.state.username,
+    //       email: this.state.email,
+    //       mob: this.state.mob,
+    //       dob: this.state.dob,
+    //     }
+    // });
+
+    //userData.map((usr)=> new User());
+
+
+    // isAllFieldsValid = this.applyValidation();
+    // console.log("========",isAllFieldsValid);
+    //this.props.navigator.pop()
   }
 
   imagepicker(){
@@ -74,7 +216,7 @@ export default class EditProfile extends Component {
        <View style = {EditProfileStyle.header} >
          <View style = {EditProfileStyle.editIconContainer}>
           <TouchableOpacity
-            onPress ={()=> this.props.navigator.pop()}
+            onPress ={()=> this.submit()}
           >
             <Image
               source={require('../images/submit_icon.png')}
@@ -95,48 +237,57 @@ export default class EditProfile extends Component {
        </View>
        <View style = {ProfileStyles.body} >
          <View style={EditProfileStyle.inputContainer}>
+          { this.state.usernameErr ? <Text style={EditProfileStyle.errorText}>{this.state.usernameErr}</Text>:this.blankView }
           <TextInput
+            ref='username'
              style={EditProfileStyle.TextInput}
              placeholder='Full name'
              keyboardType="default"
              returnKeyType="next"
-             ref="username"
+             clearTextOnFocus={true}
              underlineColorAndroid='transparent'
-             onSubmitEditing={(event)=>{this.refs.dob.focus()}}
+             blurOnSubmit={true}
+             maxLength={50}
+             numberOfLines={1}
+             onChangeText={(text) => this.setUsername(text)}
           />
-         </View>
-         <View style={EditProfileStyle.inputContainer}>
-           <TextInput
-             style={EditProfileStyle.TextInput}
-             placeholder="DOB (mm/dd/yyyy)"
-             keyboardType="numeric"
-             returnKeyType="next"
-             ref="dob"
-             underlineColorAndroid='transparent'
-             onSubmitEditing={(event)=>{this.refs.mobile.focus()}}
-           />
-         </View>
-         <View style={EditProfileStyle.inputContainer}>
-           <TextInput
-             style={EditProfileStyle.TextInput}
-             placeholder="Mobile No"
-             keyboardType="phone-pad"
-             returnKeyType="next"
-             ref="mobile"
-             underlineColorAndroid='transparent'
-             onSubmitEditing={(event)=>{this.refs.email.focus()}}
-           />
-         </View>
-         <View style={EditProfileStyle.inputContainer}>
-           <TextInput
-             style={EditProfileStyle.TextInput}
-             placeholder="email"
-             keyboardType="email-address"
-             returnKeyType="done"
-             ref="email"
-             underlineColorAndroid='transparent'
-             onSubmitEditing={(event)=>{Keyboard.dismiss()}}
-           />
+          { this.state.mobErr ? <Text style={EditProfileStyle.errorText}>{this.state.mobErr}</Text>:this.blankView }
+          <TextInput
+            ref='userDob'
+            style={EditProfileStyle.TextInput}
+            placeholder="DOB (mm/dd/yyyy)"
+            keyboardType="numeric"
+            returnKeyType="next"
+            underlineColorAndroid='transparent'
+            maxLength={10}
+            numberOfLines={1}
+            onChangeText={(text) => this.setMobile(text)}
+          />
+          { this.state.dobErr ? <Text style={EditProfileStyle.errorText}>{this.state.dobErr}</Text>:this.blankView }
+          <TextInput
+            style={EditProfileStyle.TextInput}
+            placeholder="Mobile No"
+            keyboardType="phone-pad"
+            returnKeyType="next"
+            ref='mobile'
+            underlineColorAndroid='transparent'
+            maxLength={10}
+            numberOfLines={1}
+            onChangeText={(text) => this.setDob(text)}
+          />
+          { this.state.emailErr ? <Text style={EditProfileStyle.errorText}>{this.state.emailErr}</Text>:this.blankView }
+          <TextInput
+            style={EditProfileStyle.TextInput}
+            placeholder="email"
+            keyboardType="email-address"
+            returnKeyType="done"
+            ref="email"
+            underlineColorAndroid='transparent'
+            maxLength={100}
+            numberOfLines={1}
+            onSubmitEditing={(event)=>{Keyboard.dismiss()}}
+            onChangeText={(text) => this.setEmail(text)}
+          />           
          </View> 
        </View>
      </ScrollView>
