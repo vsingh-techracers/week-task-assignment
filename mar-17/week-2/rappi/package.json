@@ -1,18 +1,36 @@
 {
-	"name": "rappi",
+	"name": "Rappi",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"build-android": "react-native bundle --entry-file index.android.js --platform android --dev false --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/",
+    "build-ios": "react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output main.jsbundle"
 	},
 	"dependencies": {
+		"lodash": "^4.17.4",
 		"react": "~15.4.1",
-		"react-native": "0.42.0"
+		"react-native": "0.42.0",
+		"react-native-drawer": "^2.3.0",
+    "react-native-extra-dimensions-android": "^0.20.1",
+    "react-native-looped-carousel": "^0.1.5",
+    "react-native-router-flux": "^3.37.0",
+    "react-redux": "^5.0.2",
+    "redux": "3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-saga": "^0.14.3",
+    "remote-redux-devtools": "^0.5.7"
 	},
 	"devDependencies": {
 		"babel-jest": "19.0.0",
 		"babel-preset-react-native": "1.9.1",
+		"eslint": "^3.14.0",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
+    "husky": "^0.13.1",
 		"jest": "19.0.2",
 		"react-test-renderer": "~15.4.1"
 	},
