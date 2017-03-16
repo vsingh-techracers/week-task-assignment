@@ -1,0 +1,2 @@
+export const GET_API_ACTION = 'GET_API_ACTION';
+export const POST_API_ACTION = 'POST_API_ACTION';
